@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Discofloor.js</title>
+	<meta charset="utf-8" />
+</head>
+<body style="background:#000">
+    <canvas width="1000" height="600" id="disco"></canvas>
+    
+    
+    <script src="discofloor.js"></script>
+    <script>
+        var disco = new DiscoFloor('disco');
+        disco.startProgram(['diagonalLT', 'diagonalRB', 'diagonalLB', 'diagonalRT', 'all', 'all', 'all', 'all', 'all', 'all', 'all', 'all', 'all', 'lines-top', 'lines-bottom', 'lines-top', 'lines-bottom', 'lines-top', 'lines-bottom', 'column-by-block', 'row-by-block', 'all', 'all', 'all', 'all', 'lines-bottom', 'lines-bottom', 'lines-bottom', 'snake']);
+    </script>
+</body>
+</html>
