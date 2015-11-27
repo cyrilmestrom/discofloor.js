@@ -1,7 +1,7 @@
 # discofloor.js
 A canvas-based discofloor - just for fun
 
-Build on HTML5 Canvas and setTimeout used to create patterns. Feel free to use, edit or play with. 
+Build on javascript, HTML5 Canvas and setTimeout used to create patterns. Feel free to use, edit or play with. 
 Or add new patterns.
 
 Use Discofloor-object to intialize discofloor:
