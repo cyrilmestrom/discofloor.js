@@ -43,9 +43,16 @@ function DiscoFloor(canvas, config) {
     this.patterns = [];
     this.definePatterns();
 
-    // draw startfloor
-    this.patterns["all"].draw(this.floorColor);
-    this.lastColor = this.config.floorColor;
+    this.initialize();
+}
+
+DiscoFloor.prototype.resizeCanvas = function (w, h) {
+    this.height = h;
+    this.width = w;
+    this.ctx.height = h;
+    this.ctx.height = w;
+    this.canvas.setAttribute('height', h);
+    this.canvas.setAttribute('width', w);
 }
 
 
@@ -189,13 +196,29 @@ DiscoFloor.prototype.definePatterns = function () {
         "horizontalSplit",
         this.sizeX * this.sizeY * this.speed,
         (function (i, j, sizeX, sizeY, speed) {
-            return i % 2 == 0 ? (i * sizeX * speed) + (j * speed) : (i * sizeX * speed) + ((sizeX - 1 - j) * speed);
+            return i * speed;
         })
     );
 
-    this.addPattern(snake);
+    this.addPattern(horizontalSplit);
 }
 
+DiscoFloor.prototype.initialize = function () {
+    // draw startfloor
+    this.patterns["all"].draw(this.floorColor);
+    this.lastColor = this.config.floorColor;
+}
+
+
+DiscoFloor.prototype.stopProgram = function () {
+    var highestTimeoutId = setTimeout(";");
+    for (var i = 0 ; i < highestTimeoutId ; i++) {
+        clearTimeout(i);
+    }
+    window.clearInterval(this.currentPatternDraw);
+    window.clearInterval(this.currentProgramDraw);
+    this.initialize();
+}
 
 DiscoFloor.prototype.startProgram = function (program, infinite) {
     var self = this;
@@ -216,9 +239,14 @@ DiscoFloor.prototype.startProgram = function (program, infinite) {
     self.drawProgram(program);
 
     // repeat if infinite is true, default is true
-    if (infinite ? infinite : true) {
-        setInterval(function () {
+    if (typeof infinite !== 'undefined' ? infinite : true) {
+        self.currentProgramDraw = setInterval(function () {
             self.drawProgram(program);
+        }, totalDuration);
+    }
+    else {
+        setTimeout(function () {
+            self.patterns["lines-top"].draw(self.floorColor);
         }, totalDuration);
     }
 }
@@ -231,7 +259,7 @@ DiscoFloor.prototype.drawProgram = function (program) {
     for (var i = 0; i < program.length; i++) {
         var p = this.patterns[program[i]];
         (function (p) {
-            setTimeout(function () {
+            p.floor.currentPatternDraw = setTimeout(function () {
                 console.log('drawing: ' + p.name);
                 p.draw();
             }, programDuration);
@@ -246,7 +274,7 @@ DiscoFloor.prototype.drawProgram = function (program) {
 function DiscoPattern(floor, name, duration, pattern) {
     // reference to DiscoFloor
     this.floor = floor;
-    // name of patterm
+    // name of pattern
     this.name = name;
     // duration of drawing the whole pattern
     this.duration = duration;
