@@ -189,18 +189,6 @@ DiscoFloor.prototype.definePatterns = function () {
 
     this.addPattern(snake);
 
-
-    // classic snake
-    var horizontalSplit = new DiscoPattern(
-        this,
-        "horizontalSplit",
-        this.sizeX * this.sizeY * this.speed,
-        (function (i, j, sizeX, sizeY, speed) {
-            return i * speed;
-        })
-    );
-
-    this.addPattern(horizontalSplit);
 }
 
 DiscoFloor.prototype.initialize = function () {
