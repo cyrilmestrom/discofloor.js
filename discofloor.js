@@ -208,7 +208,7 @@ DiscoFloor.prototype.stopProgram = function () {
     this.initialize();
 }
 
-DiscoFloor.prototype.startProgram = function (program, infinite) {
+DiscoFloor.prototype.startProgram = function (program, infinite, callBack) {
     var self = this;
 
     // change single string to array
@@ -235,6 +235,7 @@ DiscoFloor.prototype.startProgram = function (program, infinite) {
     else {
         setTimeout(function () {
             self.patterns["lines-top"].draw(self.floorColor);
+            callBack();
         }, totalDuration);
     }
 }
